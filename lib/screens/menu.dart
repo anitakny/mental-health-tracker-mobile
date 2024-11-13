@@ -2,26 +2,61 @@ import 'package:flutter/material.dart';
 import 'package:mental_health_tracker/widgets/left_drawer.dart';
 import 'package:mental_health_tracker/widgets/mood_card.dart';
 
-class MyHomePage extends StatelessWidget {
-  final String npm = '2306152273'; // NPM
-  final String name = 'Anita Khoirun Nisa'; // Name
-  final String className = 'PBP E'; // Class
+class InfoCard extends StatelessWidget {
+  // Kartu informasi yang menampilkan title dan content.
 
-  final List<ItemHomepage> items = [
-      ItemHomepage("View Mood", Icons.mood),
-      ItemHomepage("Add Mood", Icons.add),
-      ItemHomepage("Logout", Icons.logout),
-  ];
+  final String title; // Judul kartu.
+  final String content; // Isi kartu.
 
-  MyHomePage({super.key});
+  const InfoCard({super.key, required this.title, required this.content});
 
   @override
   Widget build(BuildContext context) {
-    // Scaffold provides the basic structure of the page with the AppBar and body.
+    return Card(
+      // Membuat kotak kartu dengan bayangan dibawahnya.
+      elevation: 2.0,
+      child: Container(
+        // Mengatur ukuran dan jarak di dalam kartu.
+        width: MediaQuery.of(context).size.width /
+            3.5, // menyesuaikan dengan lebar device yang digunakan.
+        padding: const EdgeInsets.all(16.0),
+        // Menyusun title dan content secara vertikal.
+        child: Column(
+          children: [
+            Text(
+              title,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 8.0),
+            Text(content),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
+class MyHomePage extends StatelessWidget {
+  MyHomePage({super.key});
+
+  final String npm = '2306152273'; // NPM
+  final String name = 'Anita Khoirun Nisa'; // Nama
+  final String className = 'PBP E'; // Kelas
+
+  final List<ItemHomepage> items = [
+    ItemHomepage("Lihat Mood", Icons.mood),
+    ItemHomepage("Tambah Mood", Icons.add),
+    ItemHomepage("Logout", Icons.logout),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    // Scaffold menyediakan struktur dasar halaman dengan AppBar dan body.
     return Scaffold(
-      // AppBar is the top part of the page that displays the title.
+      // AppBar adalah bagian atas halaman yang menampilkan judul.
       appBar: AppBar(
-        // The title of the application "Mental Health Tracker" with white text and bold font.
+        // Judul aplikasi "Mental Health Tracker" dengan teks putih dan tebal.
         title: const Text(
           'Mental Health Tracker',
           style: TextStyle(
@@ -29,21 +64,21 @@ class MyHomePage extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        // The background color of the AppBar is obtained from the application theme color scheme.
+        // Warna latar belakang AppBar diambil dari skema warna tema aplikasi.
         backgroundColor: Theme.of(context).colorScheme.primary,
-        // Set drawer icon color to white
+        // Mengganti warna icon drawer menjadi putih
         iconTheme: const IconThemeData(color: Colors.white),
       ),
-      // Add drawer as a parameter value for the drawer attribute of the Scaffold widget
+      // Masukkan drawer sebagai parameter nilai drawer dari widget Scaffold
       drawer: const LeftDrawer(),
-      // Body of the page with paddings around it.
+      // Body halaman dengan padding di sekelilingnya.
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        // Place the widget vertically in a column.
+        // Menyusun widget secara vertikal dalam sebuah kolom.
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // Row to display 3 InfoCard horizontally.
+            // Row untuk menampilkan 3 InfoCard secara horizontal.
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -53,16 +88,16 @@ class MyHomePage extends StatelessWidget {
               ],
             ),
 
-            // Give a vertical space of 16 units.
+            // Memberikan jarak vertikal 16 unit.
             const SizedBox(height: 16.0),
 
-            // Place the following widget in the center of the page.
+            // Menempatkan widget berikutnya di tengah halaman.
             Center(
               child: Column(
-                // Place the text and grid item vertically.
+                // Menyusun teks dan grid item secara vertikal.
 
                 children: [
-                  // Display the welcome message with bold font and size 18.
+                  // Menampilkan teks sambutan dengan gaya tebal dan ukuran 18.
                   const Padding(
                     padding: EdgeInsets.only(top: 16.0),
                     child: Text(
@@ -74,17 +109,17 @@ class MyHomePage extends StatelessWidget {
                     ),
                   ),
 
-                  // Grid to display ItemCard in a 3 column grid.
+                  // Grid untuk menampilkan ItemCard dalam bentuk grid 3 kolom.
                   GridView.count(
                     primary: true,
                     padding: const EdgeInsets.all(20),
                     crossAxisSpacing: 10,
                     mainAxisSpacing: 10,
                     crossAxisCount: 3,
-                    // To ensure that the grid fits its height.
+                    // Agar grid menyesuaikan tinggi kontennya.
                     shrinkWrap: true,
 
-                    // Display ItemCard for each item in the items list.
+                    // Menampilkan ItemCard untuk setiap item dalam list items.
                     children: items.map((ItemHomepage item) {
                       return ItemCard(item);
                     }).toList(),
@@ -92,39 +127,6 @@ class MyHomePage extends StatelessWidget {
                 ],
               ),
             ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class InfoCard extends StatelessWidget {
-  // Card information that displays the title and content.
-
-  final String title;  // Card title.
-  final String content;  // Card content.
-
-  const InfoCard({super.key, required this.title, required this.content});
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      // Create a card box with a shadow.
-      elevation: 2.0,
-      child: Container(
-        // Set the size and spacing within the card.
-        width: MediaQuery.of(context).size.width / 3.5, // Adjust with the width of the device used.
-        padding: const EdgeInsets.all(16.0),
-        // Place the title and content vertically.
-        child: Column(
-          children: [
-            Text(
-              title,
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8.0),
-            Text(content),
           ],
         ),
       ),
